@@ -1,24 +1,28 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import CountriesList from './components/CountriesList';
+import Navbar from './components/Navbar';
+import countriesJSON from "./countries.json"
+import {v4 as uuidv4} from "uuid";
+import { Route, Routes } from 'react-router-dom';
+import CountryDetails from './components/CountryDetails';
 
 function App() {
+  const [countries, setCountries] = useState(countriesJSON)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+<div className="App">
+<Navbar/>
+<Routes>
+<Route path="/countrieslist" element={<div className='CountryList'>
+{countries.map((country) => 
+<CountriesList key={uuidv4()} country={country}/>)}
+</div>}/>
+<Route path="countrydetails/:alphaCode" element={<div classname="CountryDetails">
+<CountryDetails/>
+</div>}/>
+</Routes>
+</div>
   );
 }
 
